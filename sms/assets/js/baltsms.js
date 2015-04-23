@@ -1,22 +1,5 @@
 jQuery.noConflict();
 
-(function ($) {
-	$.fn.stickyTabs = function() {
-		context = this
-		var showTabFromHash = function() {
-			var hash = window.location.hash;
-			var selector = hash ? 'a[href="' + hash + '"]' : "li:first-child a";
-			jQuery(selector, context).tab("show");
-		}
-		showTabFromHash(context)
-		window.addEventListener("hashchange", showTabFromHash, false);
-		jQuery("a", context).on("click", function(e) {
-			history.pushState(null, null, this.href);
-		});
-		return this;
-	};
-});
-
 var delayTimer;
 
 function loadPlugin(plugin){

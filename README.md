@@ -9,7 +9,7 @@
 
 ```
 /*
-    onstruct class on $baltsms
+    Construct class on a variable
 */
 $baltsms = new baltsms();
 

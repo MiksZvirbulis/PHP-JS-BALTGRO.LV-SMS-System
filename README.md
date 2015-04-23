@@ -35,4 +35,4 @@ $response = $baltsms->getResponse();
 ```
 
 #### Information
-This is not for
+This repository is made to be used only for baltsms.eu registered clients who have the required information to fill in the configuration. This is a shop which works with the plugins acquired in the plugins folder. The documentation for the SMS call above is meant to be used when creating a plugin for a unlock code charge use and not for external inclusion as it requires some definitions in the configuration file.

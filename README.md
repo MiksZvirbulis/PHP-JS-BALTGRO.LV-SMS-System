@@ -3,33 +3,33 @@
 #### Requirements
 
 * PHP PDO
-* allow_url_fopen enabled
+* allow_url_fopen enabled.
 
 #### PHP Class Usage
 
 ```
 /*
-    Construct class on a variable
+    Construct class on a variable.
 */
 $baltsms = new baltsms();
 
 /*
-    Set a price code from the available price list that can be found in your baltsms.eu control panel. Usually from POST
+    Set a price code from the available price list that can be found in your baltsms.eu control panel. Usually from POST.
 */
 $baltsms->setPrice(120);
 
 /*
-    Set the unlock code received by the user. Usually from POST
+    Set the unlock code received by the user. Usually from POST.
 */
 $baltsms->setCode();
 
 /*
-    Send request to the baltsms.eu server
+    Send request to the baltsms.eu server.
 */
 $baltsms->sendRequest();
 
 /*
-    Pull response. If successful, this will return true, otherwise it will return a message working with the alert class.
+    Pull response. If successful, this will return true, otherwise it will return a message working with the alert function.
 */
 $response = $baltsms->getResponse();
 ```

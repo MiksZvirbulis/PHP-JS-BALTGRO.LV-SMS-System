@@ -52,12 +52,12 @@ $c['sms']['plugins'] = array(
 /*
     Šī ir direktorija pēc ROOT direktorijas, kas noved uz SMS veikala failiem
 */
-$c['page']['directory'] = "sms";
+$c['page']['directory'] = "";
 
 /*
     Šī ir sistēmas diagnostika, kura ieslēdz kļūdu reportēšanu. Lūdzu nesajauc šo ar SMS sistēmas debug
 */
-$c['page']['debug'] = true;
+$c['page']['debug'] = false;
 
 /*
     Tava veikala platums - skaitļa vērtība tiks konvertēta un norādīta pikseļos

@@ -1,5 +1,11 @@
 <?php
 /*
+    BaltSMS - SMS Atslēgas vārda sistēma
+    BaltSMS ir aplikācija, kura saistās ar baltgroup.eu hostinga un SMS pakalpojumu piedāvātāju. Šo aplikācija drīkst izmantot tikai baltgroup.eu klienti, kuriem ir vajadzīgie dati, lai aizpildītu konfigurāciju un izveidotu savienojumu
+    Aplikāciju un pluginus veidoja Miks Zvirbulis
+    http://twitter.com/MiksZvirbulis
+*/
+/*
     NEAIZTIKT! AUTOMĀTISKI DEFINĒTĀS VĒRTĪBAS!
 */
 define("config_present", true);

@@ -86,7 +86,8 @@ $c['lang'][$p]['lv'] = array(
 	"table_donator" => "Ziedotājs",
 	"table_comment" => "Komentārs",
 	"table_amount" => "Summa",
-	"table_time" => "Laiks"
+	"table_time" => "Laiks",
+	"table_no_donators" => "Neviens vēl nav ziedojis. Varbūt vēlies būt pirmais?"
 	);
 
 $c['lang'][$p]['en'] = array(
@@ -110,7 +111,8 @@ $c['lang'][$p]['en'] = array(
 	"table_donator" => "Donator",
 	"table_comment" => "Comment",
 	"table_amount" => "Sum",
-	"table_time" => "Time"
+	"table_time" => "Time",
+	"table_no_donators" => "No one has donated yet. Would you like to be the first?"
 	);
 /*
 -----------------------------------------------------

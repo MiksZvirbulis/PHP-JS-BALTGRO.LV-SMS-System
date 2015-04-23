@@ -8,7 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo ($c['page']['external_assets'] === true) ? "http://libary.baltgroup.eu/sms" : $c['url'] . '/' . $c['page']['directory']; ?>/assets/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo ($c['page']['external_assets'] === true) ? "http://libary.baltgroup.eu/sms" : $c['url'] . '/' . $c['page']['directory']; ?>/assets/css/bootstrap.css">
 </head>
-<body>
+<body class="baltsms">
 	<div class="progress" id="baltsms-loader">
 		<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
 			<span class="sr-only"></span>

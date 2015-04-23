@@ -9,5 +9,4 @@ if(isset($_POST['plugin'])){
 	}
 }else{
 	exit;
-	die("get the fuck out");
 }

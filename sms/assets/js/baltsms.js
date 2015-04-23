@@ -27,7 +27,7 @@ function loadPlugin(plugin){
 		var dataString = { plugin: plugin };
 		jQuery.ajax({
 			type: "POST",
-			url: "/system/plugin.php",
+			url: baltsms_url + "/system/plugin.php",
 			data: dataString,
 			cache: false,
 			async: false
@@ -45,7 +45,7 @@ function loadPlugin(plugin){
 					var dataString = jQuery("form").serialize();
 					jQuery.ajax({
 						type: "POST",
-						url: "/plugins/" + jQuery("form").attr("id") + ".php",
+						url: baltsms_url + "/plugins/" + jQuery("form").attr("id") + ".php",
 						data: dataString,
 						cache: false,
 						async: false

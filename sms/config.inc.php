@@ -4,7 +4,7 @@
 */
 define("config_present", true);
 $c = array();
-$c['dir'] = $_SERVER['DOCUMENT_ROOT'];
+$c['dir'] = realpath(dirname(__FILE__));
 $c['url'] = "http" . ((!empty($_SERVER['HTTPS'])) ? "s" : "") . "://" . $_SERVER['SERVER_NAME'];
 /*
 -----------------------------------------------------
@@ -46,14 +46,18 @@ $c['sms']['number'] = 144;
     Šis ir pluginu saraksts, kas tiek ievadīts masīvā. Lūdzu ievadi tos pluginus, kurus vēlies redzēt savā veikalā un tos, kuri pastāv /plugins folderī
 */
 $c['sms']['plugins'] = array(
-    "donate"
-    );
+	"donate"
+	);
 
+/*
+    Šī ir direktorija pēc ROOT direktorijas, kas noved uz SMS veikala failiem
+*/
+$c['page']['directory'] = "sms";
 
 /*
     Šī ir sistēmas diagnostika, kura ieslēdz kļūdu reportēšanu. Lūdzu nesajauc šo ar SMS sistēmas debug
 */
-$c['page']['debug'] = false;
+$c['page']['debug'] = true;
 
 /*
     Tava veikala platums - skaitļa vērtība tiks konvertēta un norādīta pikseļos
@@ -82,9 +86,9 @@ $c['lang']['lv'] = array(
     "code_wrong_price" => "Norādītais atslēgas kods nav derīgs priekš izvēlētās summas!",
     "code_not_found" => "Norādītais atslēgas kods nav atrasts sistēmā!",
     "code_unkown_response" => "Sazinies ar administratoru nododot sekojošo atbildi: ",
-    "plugin-donate" => "Ziedot",
+	"plugin-donate" => "Ziedot",
     "plugin_not_found" => "Spraudnis netika atrasts. Pārbaudi /plugins/ direktoriju!"
-    );
+	);
 
 $c['lang']['en'] = array(
     "code_wrong_price" => "The specified unlock code is not associated with the price chosen!",

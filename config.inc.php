@@ -26,7 +26,7 @@ $c['sms']['api_key'] = "";
 /*
     Šis ir Tavs klienta ID, kuru var atrast baltgroup.eu kontroles panelī
 */
-$c['sms']['client_id'] = 1;
+$c['sms']['client_id'] = 2;
 
 /*
     Šis ir Tavs baltgroup.eu kontroles paneļa reģistrētais atslēgas vārds, kurš tiks uzrādīts pie SMS sūtīšanas instrukcijām

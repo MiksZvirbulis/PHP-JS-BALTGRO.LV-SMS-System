@@ -17,17 +17,17 @@ $c[$p]['db']['host'] = "localhost";
 /*
     Datubāzes pieejas lietotājvārds
 */
-$c[$p]['db']['username'] = "miksbalt_shop";
+$c[$p]['db']['username'] = "root";
 
 /*
     Datubāzes pieejas parole
 */
-$c[$p]['db']['password'] = "EG6RXwnJ9Cuz";
+$c[$p]['db']['password'] = "password";
 
 /*
     Datubāzes nosaukums
 */
-$c[$p]['db']['database'] = "miksbalt_shop";
+$c[$p]['db']['database'] = "baltsms";
 
 /*
     Ziedotāju tabulas nosaukums

@@ -4925,7 +4925,8 @@ a.thumbnail.active {
 }
 .alert {
   padding: 5px;
-  font-size: 10pt;
+  font-family: Tahoma, sans-serif;
+  font-size: 11px;
   margin-bottom: 5px;
   border: 1px solid transparent;
   border-radius: 2px;

@@ -55,7 +55,8 @@ $c['sms']['plugins'] = array(
 	"donate",
     "mc_group",
     "mc_unban",
-    "mc_money"
+    "mc_money",
+    "mc_exp"
 	);
 
 /*
@@ -100,6 +101,7 @@ $c['lang']['lv'] = array(
     "plugin-mc_group" => "MC Grupa",
     "plugin-mc_unban" => "MC Unban",
     "plugin-mc_money" => "MC Nauda",
+    "plugin-mc_exp" => "MC EXP",
     "plugin_not_found" => "Spraudnis netika atrasts. Pārbaudi /plugins/ direktoriju!"
 	);
 
@@ -111,6 +113,7 @@ $c['lang']['en'] = array(
     "plugin-mc_group" => "MC Group",
     "plugin-mc_unban" => "MC Unban",
     "plugin-mc_money" => "MC Money",
+    "plugin-mc_exp" => "MC EXP",
     "plugin_not_found" => "Plugin was not found. Check the /plugins/ directory!"
     );
 

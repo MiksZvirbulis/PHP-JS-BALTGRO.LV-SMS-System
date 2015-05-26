@@ -21,6 +21,11 @@ $c[$p]['db']['table'] = "baltsms_mc_money";
 $c[$p]['sms']['buyers'] = true;
 
 /*
+    Naudiņas simbols, kas tiks uzrādīts formā. Pēc noklusējuma dolāru simbols
+*/
+$c[$p]['money_symbol'] = "$";
+
+/*
     Naudas iedošanas komanda. Pēc noklusējuma, pievienota Essentials komanda
 */
 $c[$p]['commands']['giveMoney'] = "eco give <NICKNAME> <AMOUNT>";
@@ -79,7 +84,6 @@ $c['lang'][$p]['en'] = array(
 	# Forma
 	"form_price" => "Price",
 	"form_code" => "Unlock code",
-	"form_days_for" => "days for",
 	"form_player_name" => "Player",
 	"form_server" => "Server",
 	"form_select_server" => "Select server",
@@ -204,7 +208,7 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 					<select class="form-control prices" name="price" id="none-<?php echo $server; ?>-prices" style="display: none;" onChange="changePrice(this)" disabled>
 						<option selected disabled><?php echo $lang[$p]['form_select_price']; ?></option>
 						<?php foreach($prices as $price_code => $money): ?>
-							<option value="<?php echo $price_code; ?>" data-length="<?php echo $money; ?>"><?php echo $money; ?> - <?php echo baltsms::returnPrice($price_code); ?> EUR</option>
+							<option value="<?php echo $price_code; ?>" data-length="<?php echo $c[$p]['money_symbol']; ?><?php echo $money; ?>"><?php echo $c[$p]['money_symbol']; ?><?php echo $money; ?> - <?php echo baltsms::returnPrice($price_code); ?> EUR</option>
 						<?php endforeach; ?>
 					</select>
 				<?php endforeach;  ?>

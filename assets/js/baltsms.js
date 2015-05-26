@@ -13,7 +13,7 @@ function loadPlugin(plugin){
 			url: baltsms_url + "/system/plugin.php",
 			data: dataString,
 			cache: false,
-			async: false
+			async: true
 		}).done(function(returned){
 			jQuery("#baltsms-loader").fadeOut("fast");
 			jQuery("div#baltsms-page div#baltsms-content").fadeTo("fast", 1);
@@ -31,7 +31,7 @@ function loadPlugin(plugin){
 						url: baltsms_url + "/plugins/" + jQuery("form").attr("id") + ".php",
 						data: dataString,
 						cache: false,
-						async: false
+						async: true
 					}).done(function(returned){
 						jQuery("div#alerts").html(returned);
 						jQuery("#baltsms-loader").fadeOut("fast");
@@ -43,18 +43,24 @@ function loadPlugin(plugin){
 	}, 1000);
 }
 
-function setInstructions(price, template){
-	jQuery("div#instructions").html(template);
-}
-
 function returnPrice(price_code){
 	price_code = price_code * 0.01;
 	return (price_code / 0.702804).toFixed(2);
 }
 
-function changePrice(value){
-	jQuery("div#instructions span#price").text(returnPrice(value));
-	jQuery("div#instructions span#code").text(value);
+function changePrice(element){
+	length = jQuery(element).find(":selected").data("length")
+	if(jQuery(element).find(":selected").attr("data-price")){
+		jQuery("div#instructions span#price").text(returnPrice(jQuery(element).find(":selected").data("price")));
+		jQuery("div#instructions span#code").text(jQuery(element).find(":selected").data("price"));
+	}else{
+		jQuery("div#instructions span#price").text(returnPrice(element.value));
+		jQuery("div#instructions span#code").text(element.value);
+	}
+	jQuery("div#instructions span#length").text(length);
+	if(jQuery("div#instructions").css("display") == "none"){
+		jQuery("div#instructions").fadeIn("slow");
+	}
 }
 
 function setLanguage(language){
@@ -64,4 +70,21 @@ function setLanguage(language){
 		jQuery.cookie("baltsms_language", language, { expires: 31, path: "/" });
 		location.reload();
 	}
+}
+
+function listGroups(server){
+	jQuery("select.groups").hide().prop("disabled", true);
+	jQuery("select#groups").replaceWith(jQuery("select#" + server + "-groups"));
+	jQuery("select#" + server + "-groups").show().prop("disabled", false);
+	jQuery("select#" + server + "-groups").val(jQuery("select#" + server + "-groups option:first").val());
+	jQuery("select#prices").show();
+	jQuery("select.prices").hide().prop("disabled", true);
+}
+
+function listPrices(group, server){
+	jQuery("select.prices").hide().prop("disabled", true);
+	jQuery("select#prices").hide().insertAfter(jQuery("select#" + group + "-" + server + "-prices"));
+	jQuery("select#" + group + "-" + server + "-prices").show().prop("disabled", false);
+	jQuery("select#" + group + "-" + server + "-prices").val(jQuery("select#" + group + "-" + server + "-prices option:first").val());
+	jQuery("div#instructions").fadeOut("slow");
 }

@@ -2,7 +2,7 @@
 /*
     BaltSMS - SMS Atslēgas vārda sistēma
     BaltSMS ir aplikācija, kura saistās ar baltgroup.eu hostinga un SMS pakalpojumu piedāvātāju. Šo aplikācija drīkst izmantot tikai baltgroup.eu klienti, kuriem ir vajadzīgie dati, lai aizpildītu konfigurāciju un izveidotu savienojumu
-    Aplikāciju un pluginus veidoja Miks Zvirbulis
+    Aplikāciju un tās spraudņus veidoja Miks Zvirbulis
     http://twitter.com/MiksZvirbulis
 */
 /*
@@ -36,7 +36,7 @@ $c['sms']['keyword'] = "BTM";
 /*
     Šis ieslēdz SMS debug, kas ļaus izmantot zemāk norādīto kodu, lai testētu pakalpojumu pieslēgšanu pēc tās apmaksas (ieslēgt/izslēgt - true/false)
 */
-$c['sms']['debug'] = false;
+$c['sms']['debug'] = true;
 
 /*
     Šis ir SMS debug atslēgas kods, kurš pieļaus neapmaksātu pakalpojumu apstiprinājumu kamēr SMS debug būs ieslēgts
@@ -52,18 +52,21 @@ $c['sms']['number'] = 144;
     Šis ir pluginu saraksts, kas tiek ievadīts masīvā. Lūdzu ievadi tos pluginus, kurus vēlies redzēt savā veikalā un tos, kuri pastāv /plugins folderī
 */
 $c['sms']['plugins'] = array(
-	"donate"
+	"donate",
+    "mc_group",
+    "mc_unban"
 	);
 
 /*
     Šī ir direktorija pēc ROOT direktorijas, kas noved uz SMS veikala failiem
 */
 $c['page']['directory'] = "";
+echo substr(dirname(__FILE__), strlen($_SERVER['DOCUMENT_ROOT']));
 
 /*
     Šī ir sistēmas diagnostika, kura ieslēdz kļūdu reportēšanu. Lūdzu nesajauc šo ar SMS sistēmas debug
 */
-$c['page']['debug'] = false;
+$c['page']['debug'] = true;
 
 /*
     Tava veikala platums - skaitļa vērtība tiks konvertēta un norādīta pikseļos
@@ -93,6 +96,8 @@ $c['lang']['lv'] = array(
     "code_not_found" => "Norādītais atslēgas kods nav atrasts sistēmā!",
     "code_unkown_response" => "Sazinies ar administratoru nododot sekojošo atbildi: ",
 	"plugin-donate" => "Ziedot",
+    "plugin-mc_group" => "MC Grupa",
+    "plugin-mc_unban" => "MC Unban",
     "plugin_not_found" => "Spraudnis netika atrasts. Pārbaudi /plugins/ direktoriju!"
 	);
 
@@ -101,6 +106,8 @@ $c['lang']['en'] = array(
     "code_not_found" => "The specified unlock code has not been found in the database!",
     "code_unkown_response" => "Contact the administrator by passing on this message: ",
     "plugin-donate" => "Donate",
+    "plugin-mc_group" => "MC Group",
+    "plugin-mc_unban" => "MC Unban",
     "plugin_not_found" => "Plugin was not found. Check the /plugins/ directory!"
     );
 
@@ -121,4 +128,5 @@ $c['page']['lang_personal'] = (isset($_COOKIE['baltsms_language'])) ? $_COOKIE['
 $lang = $c['lang'][$c['page']['lang_personal']];
 
 require $c['dir'] . "/system/db.class.php";
+require $c['dir'] . "/system/minecraft.class.php";
 require $c['dir'] . "/system/baltsms.class.php";

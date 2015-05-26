@@ -80,7 +80,7 @@ $c['lang'][$p]['lv'] = array(
 	"form_name" => "Vārds",
 	"form_price" => "Cena",
 	"form_comment" => "Komentārs",
-	"form_code" => "Atslēgas kods",
+	"form_unlock_code" => "Atslēgas kods",
 	"form_donate" => "Ziedot",
 	# Tabula
 	"table_donator" => "Ziedotājs",
@@ -105,7 +105,7 @@ $c['lang'][$p]['en'] = array(
 	"form_name" => "Name",
 	"form_price" => "Price",
 	"form_comment" => "Comment",
-	"form_code" => "Unlock code",
+	"form_unlock_code" => "Unlock code",
 	"form_donate" => "Donate",
 	# Tabula
 	"table_donator" => "Donator",
@@ -190,7 +190,7 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 	if($db->tableExists($c[$p]['db']['table']) === false) echo baltsms::alert("Tabula netika atrasta datubāzē. Tā tika izveidota automātiski ar nosaukumu, kas norādīts konfigurācijā!", "success");
 	if($db->tableExists($c[$p]['db']['table']) === false) echo baltsms::createTable($p, $c[$p]['db']['table']);
 	?>
-	<form class="form-horizontal" method="POST" id="donate">
+	<form class="form-horizontal" method="POST" id="<?php echo $p; ?>">
 		<div class="alert alert-info" id="instructions"><?php echo baltsms::instructionTemplate($lang[$p]['instructions'], array("price" => baltsms::returnPrice($c[$p]['prices'][0]), "code" => $c[$p]['prices'][0])); ?></div>
 		<div id="alerts"></div>
 		<div class="form-group">
@@ -202,7 +202,7 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 		<div class="form-group">
 			<label for="price" class="col-sm-2 control-label"><?php echo $lang[$p]['form_price']; ?></label>
 			<div class="col-sm-10">
-				<select class="form-control" name="price" onChange="changePrice(this.value)">
+				<select class="form-control" name="price" onChange="changePrice(this)">
 					<?php foreach($c[$p]['prices'] as $price_code): ?>
 						<option value="<?php echo $price_code; ?>"><?php echo baltsms::returnPrice($price_code); ?> EUR</option>
 					<?php endforeach; ?>
@@ -216,9 +216,9 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="name" class="col-sm-2 control-label"><?php echo $lang[$p]['form_code']; ?></label>
+			<label for="name" class="col-sm-2 control-label"><?php echo $lang[$p]['form_unlock_code']; ?></label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" name="code" placeholder="<?php echo $lang[$p]['form_code']; ?>" maxlength="9" autocomplete="off">
+				<input type="text" class="form-control" name="code" placeholder="<?php echo $lang[$p]['form_unlock_code']; ?>" maxlength="9" autocomplete="off">
 			</div>
 		</div>
 		<div class="form-group">

@@ -23,6 +23,8 @@ class baltsms{
 		global $db;
 		if($plugin == "donate"){
 			$db->insert("CREATE TABLE `$table` (`id` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(32) NOT NULL, `message` varchar(250) NOT NULL, `amount` decimal(10,2) NOT NULL, `time` varchar(10) NOT NULL, PRIMARY KEY (`id`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;");
+		}elseif($plugin == "mc_group"){
+			$db->insert("CREATE TABLE `$table` (`id` int(11) NOT NULL AUTO_INCREMENT, `nickname` varchar(55) NOT NULL, `server` varchar(25) NOT NULL, `mc_group` varchar(25) NOT NULL, `length` int(5) NOT NULL, `time` varchar(10) NOT NULL, `expires` varchar(10) NOT NULL, PRIMARY KEY (`id`) ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;");
 		}
 	}
 
@@ -37,12 +39,14 @@ class baltsms{
 			array(
 				"<PRICE>",
 				"<CODE>",
+				"<LENGTH>",
 				"<NUMBER>",
-				"<KEYWORD>"
+				"<KEYWORD>",
 				),
 			array(
-				'<span id="price">' . $data['price'] . '</span>',
-				'<span id="code">' . $data['code'] . '</span>',
+				isset($data['code']) ? '<span id="price">' . $data['price'] . '</span>' : '',
+				isset($data['code']) ? '<span id="code">' . $data['code'] . '</span>' : '',
+				isset($data['length']) ? '<span id="length">' . $data['length'] . '</span>' : '',
 				$c['sms']['number'],
 				$c['sms']['keyword']
 				),

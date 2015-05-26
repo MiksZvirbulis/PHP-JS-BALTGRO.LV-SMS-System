@@ -6,7 +6,7 @@
     http://twitter.com/MiksZvirbulis
 */
 /*
-    NEAIZTIKT! AUTOMĀTISKI DEFINĒTĀS VĒRTĪBAS!
+    NEAIZTIKT! AUTOMĀTISKI DEFINĒTAS VĒRTĪBAS!
 */
 define("mc_config_present", true);
 $mc = array();

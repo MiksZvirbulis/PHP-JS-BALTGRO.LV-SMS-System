@@ -56,7 +56,7 @@ $c['lang'][$p]['en'] = array(
 	);
 /*
 -----------------------------------------------------
-    Ziedošanas spraudņa konfigurācija
+    Minecraft unban spraudņa konfigurācija
 -----------------------------------------------------
 */
 $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];

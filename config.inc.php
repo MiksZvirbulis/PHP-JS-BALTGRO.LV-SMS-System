@@ -36,7 +36,7 @@ $c['sms']['keyword'] = "BTM";
 /*
     Šis ieslēdz SMS debug, kas ļaus izmantot zemāk norādīto kodu, lai testētu pakalpojumu pieslēgšanu pēc tās apmaksas (ieslēgt/izslēgt - true/false)
 */
-$c['sms']['debug'] = false;
+$c['sms']['debug'] = true;
 
 /*
     Šis ir SMS debug atslēgas kods, kurš pieļaus neapmaksātu pakalpojumu apstiprinājumu kamēr SMS debug būs ieslēgts
@@ -54,7 +54,8 @@ $c['sms']['number'] = 144;
 $c['sms']['plugins'] = array(
 	"donate",
     "mc_group",
-    "mc_unban"
+    "mc_unban",
+    "mc_money"
 	);
 
 /*
@@ -66,7 +67,7 @@ echo substr(dirname(__FILE__), strlen($_SERVER['DOCUMENT_ROOT']));
 /*
     Šī ir sistēmas diagnostika, kura ieslēdz kļūdu reportēšanu. Lūdzu nesajauc šo ar SMS sistēmas debug
 */
-$c['page']['debug'] = false;
+$c['page']['debug'] = true;
 
 /*
     Tava veikala platums - skaitļa vērtība tiks konvertēta un norādīta pikseļos
@@ -98,6 +99,7 @@ $c['lang']['lv'] = array(
 	"plugin-donate" => "Ziedot",
     "plugin-mc_group" => "MC Grupa",
     "plugin-mc_unban" => "MC Unban",
+    "plugin-mc_money" => "MC Nauda",
     "plugin_not_found" => "Spraudnis netika atrasts. Pārbaudi /plugins/ direktoriju!"
 	);
 
@@ -108,6 +110,7 @@ $c['lang']['en'] = array(
     "plugin-donate" => "Donate",
     "plugin-mc_group" => "MC Group",
     "plugin-mc_unban" => "MC Unban",
+    "plugin-mc_money" => "MC Money",
     "plugin_not_found" => "Plugin was not found. Check the /plugins/ directory!"
     );
 

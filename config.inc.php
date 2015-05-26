@@ -56,14 +56,14 @@ $c['sms']['plugins'] = array(
     "mc_group",
     "mc_unban",
     "mc_money",
-    "mc_exp"
+    "mc_exp",
+    "mc_fpower"
 	);
 
 /*
     Šī ir direktorija pēc ROOT direktorijas, kas noved uz SMS veikala failiem
 */
 $c['page']['directory'] = "";
-echo substr(dirname(__FILE__), strlen($_SERVER['DOCUMENT_ROOT']));
 
 /*
     Šī ir sistēmas diagnostika, kura ieslēdz kļūdu reportēšanu. Lūdzu nesajauc šo ar SMS sistēmas debug
@@ -102,6 +102,7 @@ $c['lang']['lv'] = array(
     "plugin-mc_unban" => "MC Unban",
     "plugin-mc_money" => "MC Nauda",
     "plugin-mc_exp" => "MC EXP",
+    "plugin-mc_fpower" => "MC Frakciju Spēks",
     "plugin_not_found" => "Spraudnis netika atrasts. Pārbaudi /plugins/ direktoriju!"
 	);
 
@@ -114,6 +115,7 @@ $c['lang']['en'] = array(
     "plugin-mc_unban" => "MC Unban",
     "plugin-mc_money" => "MC Money",
     "plugin-mc_exp" => "MC EXP",
+    "plugin-mc_fpower" => "MC Faction Power",
     "plugin_not_found" => "Plugin was not found. Check the /plugins/ directory!"
     );
 

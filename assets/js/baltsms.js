@@ -79,6 +79,7 @@ function listGroups(server){
 	jQuery("select#" + server + "-groups").val(jQuery("select#" + server + "-groups option:first").val());
 	jQuery("select#prices").show();
 	jQuery("select.prices").hide().prop("disabled", true);
+	jQuery("div#instructions").fadeOut("slow");
 }
 
 function listPrices(group, server){

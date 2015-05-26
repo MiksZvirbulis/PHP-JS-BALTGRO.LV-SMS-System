@@ -36,6 +36,7 @@ div#baltsms-loader{
 
 div#baltsms-form-button{
 	float: right;
+	margin-right: 10px;
 }
 
 div#baltsms-form-button:after{

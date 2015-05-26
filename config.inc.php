@@ -36,7 +36,7 @@ $c['sms']['keyword'] = "BTM";
 /*
     Šis ieslēdz SMS debug, kas ļaus izmantot zemāk norādīto kodu, lai testētu pakalpojumu pieslēgšanu pēc tās apmaksas (ieslēgt/izslēgt - true/false)
 */
-$c['sms']['debug'] = true;
+$c['sms']['debug'] = false;
 
 /*
     Šis ir SMS debug atslēgas kods, kurš pieļaus neapmaksātu pakalpojumu apstiprinājumu kamēr SMS debug būs ieslēgts
@@ -66,7 +66,7 @@ echo substr(dirname(__FILE__), strlen($_SERVER['DOCUMENT_ROOT']));
 /*
     Šī ir sistēmas diagnostika, kura ieslēdz kļūdu reportēšanu. Lūdzu nesajauc šo ar SMS sistēmas debug
 */
-$c['page']['debug'] = true;
+$c['page']['debug'] = false;
 
 /*
     Tava veikala platums - skaitļa vērtība tiks konvertēta un norādīta pikseļos

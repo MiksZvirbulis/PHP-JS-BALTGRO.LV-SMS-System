@@ -274,5 +274,5 @@ foreach($purchases as $purchase){
 	}
 }
 /*
-    Neaiztikt!!! Grupas termiņa pārbauda un attiecīga dzēšana!
+    Neaiztikt!!! Frakcijas peaceful termiņa pārbaude un attiecīga dzēšana!
 */

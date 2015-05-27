@@ -2,7 +2,7 @@
 if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != "xmlhttprequest") die("Ajax Only!");
 $p = basename(__FILE__, ".php");
 defined("config_present") or require "../config.inc.php";
-in_array($p, $c['sms']['plugins']) or die(baltsms::alert("Spraudnis nav ievadīts atļauto spraudņu sarakstā!", "danger"));
+in_array($p, $c['sms']['plugins']['web']) or die(baltsms::alert("Spraudnis nav ievadīts atļauto spraudņu sarakstā!", "danger"));
 /*
 -----------------------------------------------------
     Ziedošanas spraudņa konfigurācija

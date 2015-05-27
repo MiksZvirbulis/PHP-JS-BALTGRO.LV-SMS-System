@@ -21,16 +21,25 @@
 				<?php endforeach; ?>
 			</div>
 		<?php endif; ?>
-		<?php foreach($c['sms']['plugins'] as $index => $plugin): ?>
-			<li role="presentation" class="<?php echo ($index == 0) ? "active" : ""; ?>" onClick="loadPlugin('<?php echo $plugin; ?>')"><a href="#<?php echo $plugin; ?>" aria-controls="<?php echo $plugin; ?>" role="tab" data-toggle="tab"><?php echo (isset($lang['plugin-' . $plugin])) ? $lang['plugin-' . $plugin] : "<span style='color: red'>not defined</span>"; ?></a></li>
+		<?php foreach($c['sms']['plugins'] as $type => $plugins): ?>
+			<li role="presentation" class="dropdown <?php echo ($c['sms']['primary'] == $type) ? "active" : ""; ?>">
+				<a href="#" id="plugins-<?php echo $type; ?>" class="dropdown-toggle" data-toggle="dropdown" aria-controls="plugins-<?php echo $type; ?>-contents"><?php echo (isset($lang['plugin-type-' . $type])) ? $lang['plugin-type-' . $type] : "<span style='color: red'>language not found</span>"; ?> <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu" aria-labelledby="plugins-<?php echo $type; ?>" id="plugins-<?php echo $type; ?>-contents">
+					<?php foreach($plugins as $index => $plugin): ?>
+						<li role="presentation" class="<?php echo ($c['sms']['primary'] == $type AND $index == 0) ? "active" : ""; ?>" onClick="loadPlugin('<?php echo $plugin; ?>')"><a href="#<?php echo $plugin; ?>" aria-controls="<?php echo $plugin; ?>" role="tab" data-toggle="tab"><?php echo (isset($lang['plugin-' . $plugin])) ? $lang['plugin-' . $plugin] : "<span style='color: red'>language not found</span>"; ?></a></li>
+					<?php endforeach; ?>
+				</ul>
+			</li>
 		<?php endforeach; ?>
 	</ul>
 	<div id="baltsms-page" style="width: <?php echo $c['page']['width']; ?>px">
 		<div id="baltsms-content">
 			<div role="tabpanel">
 				<div class="tab-content">
-					<?php foreach($c['sms']['plugins'] as $index => $plugin): ?>
-						<div role="tabpanel" class="tab-pane <?php echo ($index == 0) ? "active" : ""; ?>" id="<?php echo $plugin; ?>"></div>
+					<?php foreach($c['sms']['plugins'] as $type => $plugins): ?>
+						<?php foreach($plugins as $index => $plugin): ?>
+							<div role="tabpanel" class="tab-pane <?php echo ($c['sms']['primary'] == $type AND $index == 0) ? "active" : ""; ?>" id="<?php echo $plugin; ?>"></div>
+						<?php endforeach; ?>
 					<?php endforeach; ?>
 				</div>
 			</div>
@@ -46,7 +55,7 @@
 	<script src="<?php echo ($c['page']['external_assets'] === true) ? "http://library.baltgroup.eu/sms" : $c['url'] . '/' . $c['page']['directory']; ?>/assets/js/baltsms.js"></script>
 	<script type="text/javascript">
 		jQuery(document).ready(function(){
-			loadPlugin("<?php echo $c['sms']['plugins'][0]; ?>");
+			loadPlugin("<?php echo $c['sms']['plugins'][$c['sms']['primary']][0]; ?>");
 			if(window.location.hash){
 				loadPlugin(window.location.hash.substring(1));
 			}

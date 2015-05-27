@@ -3,7 +3,7 @@ if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQ
 $p = basename(__FILE__, ".php");
 defined("config_present") or require "../config.inc.php";
 defined("mc_config_present") or require "../config.minecraft.php";
-in_array($p, $c['sms']['plugins']) or die(baltsms::alert("Spraudnis nav ievadīts atļauto spraudņu sarakstā!", "danger"));
+in_array($p, $c['sms']['plugins']['mc']) or die(baltsms::alert("Spraudnis nav ievadīts atļauto spraudņu sarakstā!", "danger"));
 /*
 -----------------------------------------------------
     Minecraft EXP spraudņa konfigurācija

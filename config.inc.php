@@ -49,17 +49,26 @@ $c['sms']['debug_code'] = 123456789;
 $c['sms']['number'] = 144;
 
 /*
-    Šis ir pluginu saraksts, kas tiek ievadīts masīvā. Lūdzu ievadi tos pluginus, kurus vēlies redzēt savā veikalā un tos, kuri pastāv /plugins folderī
+    Šis ir spraudņu tips, kurš tiks ielādēts pirmais uz lapas ielādi
+*/
+$c['sms']['primary'] = "web";
+
+/*
+    Šis ir spraudņu saraksts, kas tiek ievadīts masīvā. Lūdzu ievadi tos spraudņus, kurus vēlies redzēt savā veikalā un tos, kuri pastāv /plugins folderī
 */
 $c['sms']['plugins'] = array(
-	"donate",
-    "mc_group",
-    "mc_unban",
-    "mc_money",
-    "mc_exp",
-    "mc_fpower",
-    "mc_fpeaceful"
-	);
+	"web" => array(
+        "donate"
+    ),
+    "mc" => array(
+        "mc_group",
+        "mc_unban",
+        "mc_money",
+        "mc_exp",
+        "mc_fpower",
+        "mc_fpeaceful"
+    )
+);
 
 /*
     Šī ir direktorija pēc ROOT direktorijas, kas noved uz SMS veikala failiem
@@ -98,6 +107,8 @@ $c['lang']['lv'] = array(
     "code_wrong_price" => "Norādītais atslēgas kods nav derīgs priekš izvēlētās summas!",
     "code_not_found" => "Norādītais atslēgas kods nav atrasts sistēmā!",
     "code_unkown_response" => "Sazinies ar administratoru nododot sekojošo atbildi: ",
+    "plugin-type-web" => "Website",
+    "plugin-type-mc" => "Minecraft",
 	"plugin-donate" => "Ziedot",
     "plugin-mc_group" => "MC Grupa",
     "plugin-mc_unban" => "MC Unban",
@@ -112,6 +123,8 @@ $c['lang']['en'] = array(
     "code_wrong_price" => "The specified unlock code is not associated with the price chosen!",
     "code_not_found" => "The specified unlock code has not been found in the database!",
     "code_unkown_response" => "Contact the administrator by passing on this message: ",
+    "plugin-type-web" => "Website",
+    "plugin-type-mc" => "Minecraft",
     "plugin-donate" => "Donate",
     "plugin-mc_group" => "MC Group",
     "plugin-mc_unban" => "MC Unban",

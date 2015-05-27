@@ -76,6 +76,11 @@ $c['sms']['plugins'] = array(
 $c['page']['directory'] = "";
 
 /*
+    Šis ļaus rediģēt lapas nosaukumu, kas ir <title> saturā
+*/
+$c['page']['title'] = "BaltSMS - Online SMS Services Application";
+
+/*
     Šī ir sistēmas diagnostika, kura ieslēdz kļūdu reportēšanu. Lūdzu nesajauc šo ar SMS sistēmas debug
 */
 $c['page']['debug'] = true;
@@ -152,5 +157,4 @@ $c['page']['lang_personal'] = (isset($_COOKIE['baltsms_language'])) ? $_COOKIE['
 $lang = $c['lang'][$c['page']['lang_personal']];
 
 require $c['dir'] . "/system/db.class.php";
-require $c['dir'] . "/system/minecraft.class.php";
 require $c['dir'] . "/system/baltsms.class.php";

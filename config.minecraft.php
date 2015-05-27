@@ -10,6 +10,7 @@
 */
 define("mc_config_present", true);
 $mc = array();
+require $c['dir'] . "/system/minecraft.class.php";
 /*
 -----------------------------------------------------
 Konfigurāciju rediģēt drīkst pēc šīs līnijas

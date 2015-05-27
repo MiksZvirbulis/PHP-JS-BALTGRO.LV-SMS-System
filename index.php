@@ -3,7 +3,7 @@
 <html lang="lv">
 <head>
 	<meta charset="utf-8">
-	<title>BaltSMS - Online SMS Services Application</title>
+	<title><?php echo $c['page']['title']; ?></title>
 	<link rel="stylesheet" type="text/css" href="<?php echo ($c['page']['external_assets'] === true) ? "http://library.baltgroup.eu/sms" : $c['url'] . '/' . $c['page']['directory']; ?>/assets/css/baltsms.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo ($c['page']['external_assets'] === true) ? "http://library.baltgroup.eu/sms" : $c['url'] . '/' . $c['page']['directory']; ?>/assets/css/bootstrap.min.css">
 </head>

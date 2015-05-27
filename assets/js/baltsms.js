@@ -17,6 +17,7 @@ function loadPlugin(plugin){
 		}).done(function(returned){
 			jQuery("#baltsms-loader").fadeOut("fast");
 			jQuery("div#baltsms-page div#baltsms-content").fadeTo("fast", 1);
+			jQuery("div.tab-pane").html("");
 			jQuery("div#" + plugin).html(returned);
 
 			jQuery("form").on("submit", function(e){

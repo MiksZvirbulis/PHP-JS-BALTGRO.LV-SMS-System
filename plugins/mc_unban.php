@@ -61,7 +61,7 @@ $c['lang'][$p]['en'] = array(
 */
 $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 ?>
-<?php if(isset($_POST['nickname'])): ?>
+<?php if(isset($_POST['code'])): ?>
 	<?php
 	$errors = array();
 

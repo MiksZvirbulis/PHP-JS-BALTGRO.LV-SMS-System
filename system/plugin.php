@@ -5,7 +5,7 @@ if(isset($_POST['plugin'])){
 	if(file_exists($c['dir'] . "/plugins/" . $_POST['plugin'] . ".php")){
 		include $c['dir'] . "/plugins/" . $_POST['plugin'] . ".php";
 	}else{
-		echo baltsms::alert($c['lang']['lv']['plugin_not_found'], "danger");
+		echo baltsms::alert(str_replace("<PLUGIN>", $_POST['plugin'] . ".php", $c['lang']['lv']['plugin_not_found']), "danger");
 	}
 }else{
 	exit;

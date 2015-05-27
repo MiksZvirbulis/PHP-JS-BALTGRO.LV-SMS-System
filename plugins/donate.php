@@ -124,7 +124,7 @@ if($db->connected === false) die(baltsms::alert("Nevar izveidot savienojumu ar M
 $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 ?>
 
-<?php if(isset($_POST['name'])): ?>
+<?php if(isset($_POST['code'])): ?>
 	<?php
 	$errors = array();
 

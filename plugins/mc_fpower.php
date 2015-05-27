@@ -104,7 +104,7 @@ $db = new db($mc['db']['host'], $mc['db']['username'], $mc['db']['password'], $m
 if($db->connected === false) die(baltsms::alert("Nevar izveidot savienojumu ar MySQL serveri. Pārbaudi norādītos pieejas datus!", "danger"));
 $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 ?>
-<?php if(isset($_POST['nickname'])): ?>
+<?php if(isset($_POST['code'])): ?>
 	<?php
 	$errors = array();
 

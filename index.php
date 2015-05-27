@@ -36,6 +36,7 @@
 		<div id="baltsms-content">
 			<div role="tabpanel">
 				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane" id="error"></div>
 					<?php foreach($c['sms']['plugins'] as $type => $plugins): ?>
 						<?php foreach($plugins as $index => $plugin): ?>
 							<div role="tabpanel" class="tab-pane <?php echo ($c['sms']['primary'] == $type AND $index == 0) ? "active" : ""; ?>" id="<?php echo $plugin; ?>"></div>

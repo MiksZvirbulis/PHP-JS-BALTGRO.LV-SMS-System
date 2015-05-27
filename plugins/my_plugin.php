@@ -2,125 +2,88 @@
 if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != "xmlhttprequest") die("Ajax Only!");
 $p = basename(__FILE__, ".php");
 defined("config_present") or require "../config.inc.php";
-defined("mc_config_present") or require "../config.minecraft.php";
-in_array($p, $c['sms']['plugins']['mc']) or die(baltsms::alert("Spraudnis nav ievadīts atļauto spraudņu sarakstā!", "danger"));
+# defined("mc_config_present") or require "../config.minecraft.php"; /* Ja šis spraudnis saistās ar Minecraft, atkomentē šo līniju */
+in_array($p, $c['sms']['plugins']['web']) or die(baltsms::alert("[plugin not defined] Spraudnis nav ievadīts atļauto spraudņu sarakstā!", "danger"));
 /*
 -----------------------------------------------------
-    Minecraft EXP spraudņa konfigurācija
+
+    Jauna spraudņa piemērs - šis piemērs, kas ļaus Tev palīdzēt uzsākt sava spraudņa izveidi
+
 -----------------------------------------------------
 */
 
 /*
-    EXP pircēju tabulas nosaukums
+    Datubāzes servera adrese, pēc noklusējuma "localhost"
 */
-$c[$p]['db']['table'] = "baltsms_mc_exp";
+$c[$p]['db']['host'] = "localhost";
 
 /*
-    Vai uzrādīt pircēju sarakstu - jā/nē - true/false
+    Datubāzes pieejas lietotājvārds
 */
-$c[$p]['sms']['buyers'] = true;
+$c[$p]['db']['username'] = "root";
 
 /*
-    EXP iedošanas komanda. Pēc noklusējuma, pievienota Essentials komanda
+    Datubāzes pieejas parole
 */
-$c[$p]['commands']['giveEXP'] = "exp give <NICKNAME> <AMOUNT>";
+$c[$p]['db']['password'] = "password";
 
-$c[$p]['prices'] = array(
-    "skyblock" => array(
-    	25 => 10,
-    	50 => 30,
-    	75 => 100
-    ),
-    "test" => array(
-    	50 => 5,
-    	100 => 15,
-    	150 => 50
-    )
-);
+/*
+    Datubāzes nosaukums
+*/
+$c[$p]['db']['database'] = "baltsms";
 
+/*
+    Tabulas nosaukums
+*/
+$c[$p]['db']['table'] = "baltsms_my_plugin";
+
+/*
+    Pakalpojuma cena
+*/
+$c[$p]['price'] = 50;
+
+/*
+    Valodas tulkojumi
+*/
 $c['lang'][$p]['lv'] = array(
-    "instructions" => "Lai iegādātos <LENGTH> EXP par <PRICE> EUR, sūti kodu <b><KEYWORD><CODE></b> uz <b><NUMBER></b>, lai saņemtu atslēgas kodu!",
+    "instructions" => "Lai iegādātos gaisu par <PRICE> EUR, sūti kodu <b><KEYWORD><CODE></b> uz <b><NUMBER></b>, lai saņemtu atslēgas kodu!",
 	# Kļūdas
-    "error_empty_nickname" => "Ievadi savu spēlētāja vārdu!",
-    "error_empty_server" => "Izvēlies serveri!",
-    "error_empty_price" => "Izvēlies cenu!",
     "error_empty_code" => "Ievadi atslēgas kodu!",
-    "error_invalid_code" => "Atslēgas kods nav pareizi sastādīts!",
-    "error_price_not_listed" => "Izvēlētā cena nav atrasta priekš izvēlētā servera!",
-    "exp_purchased" => "EXP veiksmīgi iegādāti. Lai jauka spēlēšana!",
+	"error_invalid_code" => "Atslēgas kods nav pareizi sastādīts!",
+	"success" => "Atslēgas kods veiksmīgi izmantots!",
 	# Forma
-    "form_price" => "Cena",
-    "form_code" => "Atslēgas kods",
-    "form_player_name" => "Spēlētājs",
-    "form_server" => "Serveris",
-    "form_select_server" => "Izvēlies serveri",
-    "form_price" => "Cena",
-    "form_select_price" => "Izvēlies cenu",
-    "form_unlock_code" => "Atslēgas kods",
+	"form_unlock_code" => "Atslēgas kods",
     "form_buy" => "Pirkt",
-	# Tabula
-    "table_nickname" => "Spēlētājs",
-    "table_server" => "Serveris",
-    "table_exp" => "EXP",
-    "table_date" => "Datums",
-    "table_no_buyers" => "Neviens vēl nav iegādājies EXP. Varbūt vēlies būt pirmais?"
 );
 
 $c['lang'][$p]['en'] = array(
-	"instructions" => "To purchase <LENGTH> EXP for <PRICE> EUR, send the following code: <b><KEYWORD><CODE></b> to <b><NUMBER></b> to receive an unclock code!",
+	"instructions" => "To purchase air for <PRICE> EUR, send the following code: <b><KEYWORD><CODE></b> to <b><NUMBER></b> to receive an unclock code!",
 	# Kļūdas
-	"error_empty_nickname" => "Enter your nickname!",
-	"error_empty_server" => "Select the server!",
-	"error_empty_price" => "Select the price!",
 	"error_empty_code" => "Enter the unlock code!",
 	"error_invalid_code" => "The format of the unlock code is not valid!",
-	"error_price_not_listed" => "The selected price has not been found for the selected server!",
-	"exp_purchased" => "EXP was purchased successfully. Have fun!",
+	"success" => "Unlock code successfully used!",
 	# Forma
-	"form_price" => "Price",
-	"form_code" => "Unlock code",
-	"form_player_name" => "Player",
-	"form_server" => "Server",
-	"form_select_server" => "Select server",
-	"form_price" => "Price",
-	"form_select_price" => "Select price",
 	"form_unlock_code" => "Unlock code",
 	"form_buy" => "Buy",
 	# Tabula
-	"table_nickname" => "Player",
-    "table_server" => "Server",
-    "table_exp" => "EXP",
-    "table_date" => "Date",
-    "table_no_buyers" => "No one has bought any EXP yet. Would you like to be the first?"
 );
 /*
 -----------------------------------------------------
-    Minecraft EXP spraudņa konfigurācija
+
+    Jauna spraudņa piemērs - šis piemērs, kas ļaus Tev palīdzēt uzsākt sava spraudņa izveidi
+
 -----------------------------------------------------
 */
-$db = new db($mc['db']['host'], $mc['db']['username'], $mc['db']['password'], $mc['db']['database']);
-if($db->connected === false) die(baltsms::alert("Nevar izveidot savienojumu ar MySQL serveri. Pārbaudi norādītos pieejas datus!", "danger"));
-$lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
+$db = new db($c[$p]['db']['host'], $c[$p]['db']['username'], $c[$p]['db']['password'], $c[$p]['db']['database']); # Savienojamies ar datubāzi
+if($db->connected === false) die(baltsms::alert("Nevar izveidot savienojumu ar MySQL serveri. Pārbaudi norādītos pieejas datus!", "danger")); # Pārbaudam vai ir iespējams savienoties ar datubāzi
+$lang[$p] = $c['lang'][$p][$c['page']['lang_personal']]; # Definējam lietotāja izvēlēto valodu
 ?>
-<?php if(isset($_POST['nickname'])): ?>
+<?php if(isset($_POST['code'])): # Pārliecinamies, ka forma pieprasa POST, nevis satura uzrādīšanu ?>
 	<?php
-	$errors = array();
-
-	if(empty($_POST['nickname'])){
-		$errors[] = $lang[$p]['error_empty_nickname'];
-	}
-
-	if(empty($_POST['server'])){
-		$errors[] = $lang[$p]['error_empty_server'];
-	}
-
-	if(empty($_POST['price']) AND !empty($_POST['server'])){
-		$errors[] = $lang[$p]['error_empty_price'];
-	}else{
-		if(!isset($c[$p]['prices'][$_POST['server']][$_POST['price']])){
-			$errors[] = $lang[$p]['error_price_not_listed'];
-		}
-	}
+	/*
+	Formas pārstrāde un ievadīto vērtību pārbaude
+	*/
+	$errors = array(); # Kļudas izvadam ar $errors[], kas pēc tam tiks izvadītas ar ciklu
 
 	if(empty($_POST['code'])){
 		$errors[] = $lang[$p]['error_empty_code'];
@@ -135,25 +98,18 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 			echo baltsms::alert($error, "danger");
 		}
 	}else{
+		/*
+		Pārbaudam atslēgas kodu un vai tas saskan ar apmaksāto kodu
+		*/
 		$baltsms = new baltsms();
-		$baltsms->setPrice($_POST['price']);
-		$baltsms->setCode($_POST['code']);
+		$baltsms->setPrice($c[$p]['price']); # Cena, kas norādīta augstāk. Attiecīgi nomaini, ja cenas ir vairākas un cena tiek izvilkta no <select>
+		$baltsms->setCode($_POST['code']); # Ievadītais atslēgas kods
 		$baltsms->sendRequest();
 		if($baltsms->getResponse() === true){
-			$db->insert("INSERT INTO `" . $c[$p]['db']['table'] . "` (`nickname`, `server`, `exp`, `time`) VALUES (?, ?, ?, ?)", array(
-				$_POST['nickname'],
-				$_POST['server'],
-				$c[$p]['prices'][$_POST['server']][$_POST['price']],
-				time()
-				));
-
-			$giveEXP = str_replace(
-				array("<NICKNAME>", "<AMOUNT>"),
-				array($_POST['nickname'], $c[$p]['prices'][$_POST['server']][$_POST['price']]),
-				$c[$p]['commands']['giveEXP']
-				);
-			$mc['rcon'][$_POST['server']]->send_command($giveEXP);
-			echo baltsms::alert($lang[$p]['exp_purchased'], "success");
+			echo baltsms::alert($lang[$p]['success'], "success");
+			/*
+			Šeit vari droši ievadīt savu saturu, kas nodos iegādāto pakalpojumu. Tā var būt Minecraft komanda vai vienkāršs SQL kvērijs
+			*/
 			?>
 			<script type="text/javascript">
 				setTimeout(function(){
@@ -163,52 +119,24 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 			<?php
 		}else{
 			echo $baltsms->getResponse();
+			/*
+			Šis izvadīs ievadītā atslēgas koda kļūdu, jo pārbaudes rezultāts nebūs veiksmīgs
+			*/
 		}
 	}
 	?>
 <?php else: ?>
 	<?php
-	if($db->tableExists($c[$p]['db']['table']) === false) echo baltsms::alert("Tabula netika atrasta datubāzē. Tā tika izveidota automātiski ar nosaukumu, kas norādīts konfigurācijā!", "success");
-	if($db->tableExists($c[$p]['db']['table']) === false) echo baltsms::createTable($p, $c[$p]['db']['table']);
+	/*
+	Šis veiks pārbaudi vai augstāk norādītais tabulas nosaukums eksistē datubāzē
+	Ja vēlies automatizēt tabulas izveidi, atkomentē nākošās divas līnijas, kas satur if() un izveido jaunu SQL komandas līniju iekš baltsms.class.php createTable() funkcijas saturā
+	*/
+	# if($db->tableExists($c[$p]['db']['table']) === false) echo baltsms::alert("Tabula netika atrasta datubāzē. Tā tika izveidota automātiski ar nosaukumu, kas norādīts konfigurācijā!", "success");
+	# if($db->tableExists($c[$p]['db']['table']) === false) echo baltsms::createTable($p, $c[$p]['db']['table']);
 	?>
 	<form class="form-horizontal" method="POST" id="<?php echo $p; ?>">
-		<div class="alert alert-info" id="instructions" style="display: none;"><?php echo baltsms::instructionTemplate($lang[$p]['instructions'], array("price" => baltsms::returnPrice(0), "code" => 0, "length" => 0)); ?></div>
+		<div class="alert alert-info" id="instructions"><?php echo baltsms::instructionTemplate($lang[$p]['instructions'], array("price" => baltsms::returnPrice($c[$p]['price']), "code" => $c[$p]['price'])); ?></div>
 		<div id="alerts"></div>
-		<div class="form-group">
-			<label for="nickname" class="col-sm-2 control-label"><?php echo $lang[$p]['form_player_name']; ?></label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" name="nickname" placeholder="<?php echo $lang[$p]['form_player_name']; ?>">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="price" class="col-sm-2 control-label"><?php echo $lang[$p]['form_server']; ?></label>
-			<div class="col-sm-10">
-				<select class="form-control" name="server" onChange="listPrices('none', this.value)">
-					<option selected disabled><?php echo $lang[$p]['form_server']; ?></option>
-					<?php foreach($mc['servers'] as $type => $data): ?>
-						<?php if($data->show !== false): ?>
-							<option value="<?php echo $type; ?>"><?php echo $data->title; ?></option>
-						<?php endif; ?>
-					<?php endforeach; ?>
-				</select>
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="price" class="col-sm-2 control-label"><?php echo $lang[$p]['form_price']; ?></label>
-			<div class="col-sm-10">
-				<select class="form-control" id="prices">
-					<option selected disabled><?php echo $lang[$p]['form_select_server']; ?></option>
-				</select>
-				<?php foreach($c[$p]['prices'] as $server => $prices): ?>
-					<select class="form-control prices" name="price" id="none-<?php echo $server; ?>-prices" style="display: none;" onChange="changePrice(this)" disabled>
-						<option selected disabled><?php echo $lang[$p]['form_select_price']; ?></option>
-						<?php foreach($prices as $price_code => $exp): ?>
-							<option value="<?php echo $price_code; ?>" data-length="<?php echo $exp; ?>"><?php echo $exp; ?> EXP - <?php echo baltsms::returnPrice($price_code); ?> EUR</option>
-						<?php endforeach; ?>
-					</select>
-				<?php endforeach;  ?>
-			</div>
-		</div>
 		<div class="form-group">
 			<label for="name" class="col-sm-2 control-label"><?php echo $lang[$p]['form_unlock_code']; ?></label>
 			<div class="col-sm-10">
@@ -221,31 +149,4 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 			</div>
 		</div>
 	</form>
-	<?php if($c[$p]['sms']['buyers'] === true): ?>
-		<table class="table table-bordered">
-			<thead>
-				<th><?php echo $lang[$p]['table_nickname']; ?></th>
-				<th><?php echo $lang[$p]['table_server']; ?></th>
-				<th><?php echo $lang[$p]['table_date']; ?></th>
-				<th><?php echo $lang[$p]['table_exp']; ?></th>
-			</thead>
-			<tbody>
-				<?php $buyers = $db->fetchAll("SELECT * FROM `" . $c[$p]['db']['table'] . "` ORDER BY `time` DESC"); ?>
-				<?php if(empty($buyers)): ?>
-					<tr>
-						<td colspan="4"><?php echo $lang[$p]['table_no_buyers']; ?></td>
-					</tr>
-				<?php else: ?>
-					<?php foreach($buyers as $buyer): ?>
-						<tr>
-							<td><?php echo $buyer['nickname']; ?></td>
-							<td><?php echo $mc['servers'][$buyer['server']]->title; ?></td>
-							<td><?php echo date("d/m/y H:i", $buyer['time']); ?></td>
-							<td><?php echo $buyer['exp']; ?> EXP</td>
-						</tr>
-					<?php endforeach; ?>
-				<?php endif; ?>
-			</tbody>
-		</table>
-	<?php endif; ?>
 <?php endif; ?>

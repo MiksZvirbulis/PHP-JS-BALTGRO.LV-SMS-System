@@ -58,7 +58,8 @@ $c['sms']['primary'] = "web";
 */
 $c['sms']['plugins'] = array(
 	"web" => array(
-        "donate"
+        "donate",
+        "my_plugin"
     ),
     "mc" => array(
         "mc_group",
@@ -121,7 +122,7 @@ $c['lang']['lv'] = array(
     "plugin-mc_exp" => "MC EXP",
     "plugin-mc_fpower" => "MC Frakcijas Spēks",
     "plugin-mc_fpeaceful" => "MC Frakcijas Peaceful",
-    "plugin_not_found" => "Spraudnis netika atrasts. Pārbaudi /plugins/ direktoriju!"
+    "plugin_not_found" => "[plugin-not-found] Spraudnis netika atrasts. Pārbaudi vai fails <strong>plugins/<PLUGIN></strong> eksistē!"
 	);
 
 $c['lang']['en'] = array(
@@ -137,7 +138,7 @@ $c['lang']['en'] = array(
     "plugin-mc_exp" => "MC EXP",
     "plugin-mc_fpower" => "MC Faction Power",
     "plugin-mc_fpeaceful" => "MC Faction Peaceful",
-    "plugin_not_found" => "Plugin was not found. Check the /plugins/ directory!"
+    "plugin_not_found" => "[plugin-not-found] Plugin was not found. Check if the file <strong>plugins/<PLUGIN></strong> exists!"
     );
 
 /*

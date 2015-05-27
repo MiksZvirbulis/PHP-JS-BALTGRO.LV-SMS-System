@@ -15,33 +15,41 @@ function loadPlugin(plugin){
 			cache: false,
 			async: true
 		}).done(function(returned){
-			jQuery("#baltsms-loader").fadeOut("fast");
-			jQuery("div#baltsms-page div#baltsms-content").fadeTo("fast", 1);
-			jQuery("div.tab-pane").html("");
-			jQuery("div#" + plugin).html(returned);
+			if(returned.indexOf("[plugin-not-found]") >= 0 || returned.indexOf("[plugin not defined]") >= 0){
+				jQuery("li.dropdown").removeClass("active").find("li").removeClass("active");
+				jQuery("#baltsms-loader").fadeOut("fast");
+				jQuery("div#baltsms-page div#baltsms-content").fadeTo("fast", 1);
+				jQuery("div.tab-pane").removeClass("active");
+				jQuery("div#error").html(returned).addClass("active");
+			}else{
+				jQuery("#baltsms-loader").fadeOut("fast");
+				jQuery("div#baltsms-page div#baltsms-content").fadeTo("fast", 1);
+				jQuery("div.tab-pane").html("");
+				jQuery("div#" + plugin).html(returned);
 
-			jQuery("form").on("submit", function(e){
-				e.preventDefault();
-				jQuery("div#baltsms-page div#baltsms-content").fadeTo("fast", 0.2);
-				jQuery("#baltsms-loader").show();
-				clearTimeout(delayTimer);
-				delayTimer = setTimeout(function() {
-					var dataString = jQuery("form").serialize();
-					jQuery.ajax({
-						type: "POST",
-						url: baltsms_url + "/plugins/" + jQuery("form").attr("id") + ".php",
-						data: dataString,
-						cache: false,
-						async: true
-					}).done(function(returned){
-						jQuery("div#alerts").html(returned);
-						jQuery("#baltsms-loader").fadeOut("fast");
-						jQuery("div#baltsms-page div#baltsms-content").fadeTo("fast", 1);
-					});
-				}, 1000);
-			});
+				jQuery("form").on("submit", function(e){
+					e.preventDefault();
+					jQuery("div#baltsms-page div#baltsms-content").fadeTo("fast", 0.2);
+					jQuery("#baltsms-loader").show();
+					clearTimeout(delayTimer);
+					delayTimer = setTimeout(function() {
+						var dataString = jQuery("form").serialize();
+						jQuery.ajax({
+							type: "POST",
+							url: baltsms_url + "/plugins/" + jQuery("form").attr("id") + ".php",
+							data: dataString,
+							cache: false,
+							async: true
+						}).done(function(returned){
+							jQuery("div#alerts").html(returned);
+							jQuery("#baltsms-loader").fadeOut("fast");
+							jQuery("div#baltsms-page div#baltsms-content").fadeTo("fast", 1);
+						});
+					}, 1000);
+				});
+			}
 		});
-	}, 1000);
+}, 1000);
 }
 
 function returnPrice(price_code){

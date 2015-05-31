@@ -1,5 +1,5 @@
 <?php
-if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != "xmlhttprequest") die("Ajax Only!");
+if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) OR (isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != "xmlhttprequest")) die("Ajax Only!");
 if(isset($_POST['plugin'])){
 	require "../config.inc.php";
 	if(file_exists($c['dir'] . "/plugins/" . $_POST['plugin'] . ".php")){

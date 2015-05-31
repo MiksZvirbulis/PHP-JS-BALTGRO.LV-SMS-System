@@ -6,56 +6,74 @@ defined("mc_config_present") or require "../config.minecraft.php";
 in_array($p, $c['sms']['plugins']['mc']) or die(baltsms::alert("Spraudnis nav ievadīts atļauto spraudņu sarakstā!", "danger"));
 /*
 -----------------------------------------------------
-    Minecraft unban spraudņa konfigurācija
+    Minecraft reģistrācijas spraudņa konfigurācija
 -----------------------------------------------------
 */
 
 /*
-    Unban veikšanas komanda. Pārliecinies, ka tieši šī komanda sakrīt ar servera unban komandu!
+    Vai pēc veiksmīga pirkuma izsūtīt informatīvu paziņojumu uz serveri?
 */
-$c[$p]['commands']['unban'] = "unban <NICKNAME>";
+$c[$p]['ingame']['notifications'] = true;
+
+/*
+    Kādu ziņu izsūtīt uz serveri?
+*/
+$c[$p]['ingame']['message'] = "<NICKNAME> just registered on our BaltSMS Shop!";
+
+/*
+    Reģistrācijas komanda. Pārliecinies, ka tieši šī komanda sakrīt ar servera lietotāju reģistrācijas komandu!
+    Šī komanda stradā ar AuthMe spraudni, bet ja Tu izmanto citu spraudni, pārbaudi tā spraudņa dokumentāciju!
+*/
+$c[$p]['commands']['register'] = "authme register <NICKNAME> <PASSWORD>";
+
 
 $c[$p]['prices'] = array(
-    "skyblock" => 250,
-    "test" => 300
+    "skyblock" => 25,
+    "test" => 50
 );
 
 $c['lang'][$p]['lv'] = array(
-    "instructions" => "Lai iegādātos unban par <PRICE> EUR izvēlētajā serverī, sūti kodu <b><KEYWORD><CODE></b> uz <b><NUMBER></b>, lai saņemtu atslēgas kodu!",
+    "instructions" => "Lai reģistrētos par <PRICE> EUR izvēlētajā serverī, sūti kodu <b><KEYWORD><CODE></b> uz <b><NUMBER></b>, lai saņemtu atslēgas kodu!",
 	# Kļūdas
-    "error_empty_nickname" => "Ievadi savu spēlētāja vārdu!",
+    "error_empty_nickname" => "Ievadi spēlētāja vārdu!",
+    "error_username_taken" => "Lietotājvārds aizņemts!",
+    "error_empty_password" => "Ievadi paroli!",
     "error_empty_server" => "Izvēlies serveri!",
     "error_empty_code" => "Ievadi atslēgas kodu!",
     "error_invalid_code" => "Atslēgas kods nav pareizi sastādīts!",
-    "unban_successful" => "Bans veiksmīgi noņemts!",
+    "registration_successful" => "Reģistrācija veiksmīga!",
 	# Forma
     "form_price" => "Cena",
     "form_code" => "Atslēgas kods",
     "form_player_name" => "Spēlētājs",
+    "form_password" => "Parole",
     "form_server" => "Serveris",
     "form_unlock_code" => "Atslēgas kods",
-    "form_buy" => "Pirkt",
+    "form_register" => "Reģistrēties",
 );
 
-    $c['lang'][$p]['en'] = array(
-    "instructions" => "To purchase the ban removal for <PRICE> EUR in the selected server, send the following code: <b><KEYWORD><CODE></b> to <b><NUMBER></b> to receive an unclock code!",
+$c['lang'][$p]['en'] = array(
+    "instructions" => "To register for <PRICE> EUR in the selected server, send the following code: <b><KEYWORD><CODE></b> to <b><NUMBER></b> to receive an unclock code!",
 	# Kļūdas
-    "error_empty_nickname" => "Enter your nickname!",
+    "error_empty_nickname" => "Enter a nickname!",
+    "error_username_taken" => "Nickname taken!",
+    "error_empty_password" => "Enter a password!",
     "error_empty_server" => "Select the server!",
     "error_empty_code" => "Enter the unlock code!",
     "error_invalid_code" => "The format of the unlock code is not valid!",
-    "unban_successful" => "Ban removed sucessfully!",
+    "registration_successful" => "Registration successful!",
 	# Forma
     "form_price" => "Price",
     "form_code" => "Unlock code",
     "form_player_name" => "Player",
+    "form_password" => "Password",
     "form_server" => "Server",
     "form_unlock_code" => "Unlock code",
-    "form_buy" => "Buy",
+    "form_register" => "Register",
 );
 /*
 -----------------------------------------------------
-    Minecraft unban spraudņa konfigurācija
+    Minecraft reģistrācijas spraudņa konfigurācija
 -----------------------------------------------------
 */
 $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
@@ -66,6 +84,19 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 
 	if(empty($_POST['nickname'])){
 		$errors[] = $lang[$p]['error_empty_nickname'];
+	}else{
+		$register = str_replace(
+			array("<NICKNAME>", "<PASSWORD>"),
+			array($_POST['nickname'], $_POST['password']),
+			$c[$p]['commands']['register']
+		);
+		if(strpos($mc['rcon'][$_POST['server']]->send_command($register), "Username already registered") !== false){
+			$errors[] = $lang[$p]['error_username_taken'];
+		}
+	}
+
+	if(empty($_POST['password'])){
+		$errors[] = $lang[$p]['error_empty_password'];
 	}
 
 	if(empty($_POST['server'])){
@@ -90,13 +121,16 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 		$baltsms->setCode($_POST['code']);
 		$baltsms->sendRequest();
 		if($baltsms->getResponse() === true){
-			$unban = str_replace(
-				array("<NICKNAME>"),
-				array($_POST['nickname']),
-				$c[$p]['commands']['unban']
+			$mc['rcon'][$_POST['server']]->send_command($register);
+			if($c[$p]['ingame']['notifications'] === true){
+				$sendMessage = str_replace(
+					array("<NICKNAME>"),
+					array($_POST['nickname']),
+					$c[$p]['ingame']['message']
 				);
-			$mc['rcon'][$_POST['server']]->send_command($unban);
-			echo baltsms::alert($lang[$p]['unban_successful'], "success");
+				$mc['rcon'][$_POST['server']]->send_command("say " . $sendMessage);
+			}
+			echo baltsms::alert($lang[$p]['registration_successful'], "success");
 			?>
 			<script type="text/javascript">
 				setTimeout(function(){
@@ -120,6 +154,12 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 			</div>
 		</div>
 		<div class="form-group">
+			<label for="password" class="col-sm-2 control-label"><?php echo $lang[$p]['form_password']; ?></label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" name="password" placeholder="<?php echo $lang[$p]['form_password']; ?>">
+			</div>
+		</div>
+		<div class="form-group">
 			<label for="server" class="col-sm-2 control-label"><?php echo $lang[$p]['form_server']; ?></label>
 			<div class="col-sm-10">
 				<select class="form-control" name="server" onChange="changePrice(this)">
@@ -139,7 +179,7 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 		</div>
 		<div class="form-group">
 			<div id="baltsms-form-button">
-				<button type="submit" class="btn btn-primary"><?php echo $lang[$p]['form_buy']; ?></button>
+				<button type="submit" class="btn btn-primary"><?php echo $lang[$p]['form_register']; ?></button>
 			</div>
 		</div>
 	</form>

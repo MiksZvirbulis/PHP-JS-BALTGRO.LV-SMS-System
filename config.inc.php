@@ -58,8 +58,7 @@ $c['sms']['primary'] = "web";
 */
 $c['sms']['plugins'] = array(
 	"web" => array(
-        "donate",
-        "my_plugin"
+        "donate"
     ),
     "mc" => array(
         "mc_group",
@@ -67,7 +66,11 @@ $c['sms']['plugins'] = array(
         "mc_money",
         "mc_exp",
         "mc_fpower",
-        "mc_fpeaceful"
+        "mc_fpower-expiry",
+        "mc_fpeaceful",
+        "mc_unjail",
+        "mc_register",
+        "mc_say"
     )
 );
 
@@ -116,14 +119,18 @@ $c['lang']['lv'] = array(
     "plugin-type-web" => "Website",
     "plugin-type-mc" => "Minecraft",
 	"plugin-donate" => "Ziedot",
-    "plugin-mc_group" => "MC Grupa",
-    "plugin-mc_unban" => "MC Unban",
-    "plugin-mc_money" => "MC Nauda",
-    "plugin-mc_exp" => "MC EXP",
-    "plugin-mc_fpower" => "MC Frakcijas Spēks",
-    "plugin-mc_fpeaceful" => "MC Frakcijas Peaceful",
+    "plugin-mc_group" => "Grupas",
+    "plugin-mc_unban" => "Bana noņemšana",
+    "plugin-mc_money" => "Nauda",
+    "plugin-mc_exp" => "EXP",
+    "plugin-mc_fpower" => "Frakcijas Spēks",
+    "plugin-mc_fpower-expiry" => "Frakcijas Spēks",
+    "plugin-mc_fpeaceful" => "Frakcijas Peaceful",
+    "plugin-mc_unjail" => "Unjail",
+    "plugin-mc_register" => "Reģistrācija",
+    "plugin-mc_say" => "Čata ziņa",
     "plugin_not_found" => "[plugin-not-found] Spraudnis netika atrasts. Pārbaudi vai fails <strong>plugins/<PLUGIN></strong> eksistē!"
-	);
+);
 
 $c['lang']['en'] = array(
     "code_wrong_price" => "The specified unlock code is not associated with the price chosen!",
@@ -132,14 +139,18 @@ $c['lang']['en'] = array(
     "plugin-type-web" => "Website",
     "plugin-type-mc" => "Minecraft",
     "plugin-donate" => "Donate",
-    "plugin-mc_group" => "MC Group",
-    "plugin-mc_unban" => "MC Unban",
-    "plugin-mc_money" => "MC Money",
-    "plugin-mc_exp" => "MC EXP",
-    "plugin-mc_fpower" => "MC Faction Power",
-    "plugin-mc_fpeaceful" => "MC Faction Peaceful",
+    "plugin-mc_group" => "Groups",
+    "plugin-mc_unban" => "Ban removal",
+    "plugin-mc_money" => "Money",
+    "plugin-mc_exp" => "EXP",
+    "plugin-mc_fpower" => "Faction Power",
+    "plugin-mc_fpower-expiry" => "Faction Power",
+    "plugin-mc_fpeaceful" => "Faction Peaceful",
+    "plugin-mc_unjail" => "Unjail",
+    "plugin-mc_register" => "Registration",
+    "plugin-mc_say" => "Chat message",
     "plugin_not_found" => "[plugin-not-found] Plugin was not found. Check if the file <strong>plugins/<PLUGIN></strong> exists!"
-    );
+);
 
 /*
 -----------------------------------------------------

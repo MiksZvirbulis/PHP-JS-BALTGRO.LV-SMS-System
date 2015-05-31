@@ -6,56 +6,57 @@ defined("mc_config_present") or require "../config.minecraft.php";
 in_array($p, $c['sms']['plugins']['mc']) or die(baltsms::alert("Spraudnis nav ievadīts atļauto spraudņu sarakstā!", "danger"));
 /*
 -----------------------------------------------------
-    Minecraft unban spraudņa konfigurācija
+    Minecraft čata ieraksta spraudņa konfigurācija
 -----------------------------------------------------
 */
 
 /*
-    Unban veikšanas komanda. Pārliecinies, ka tieši šī komanda sakrīt ar servera unban komandu!
+    Čata ieraksta veikšanas komanda
 */
-$c[$p]['commands']['unban'] = "unban <NICKNAME>";
+$c[$p]['commands']['sendMessage'] = "say <MESSAGE>";
+
 
 $c[$p]['prices'] = array(
-    "skyblock" => 250,
-    "test" => 300
+    "skyblock" => 50,
+    "test" => 100
 );
 
 $c['lang'][$p]['lv'] = array(
-    "instructions" => "Lai iegādātos unban par <PRICE> EUR izvēlētajā serverī, sūti kodu <b><KEYWORD><CODE></b> uz <b><NUMBER></b>, lai saņemtu atslēgas kodu!",
+    "instructions" => "Lai izsūtītu ziņu par <PRICE> EUR izvēlētajā serverī, sūti kodu <b><KEYWORD><CODE></b> uz <b><NUMBER></b>, lai saņemtu atslēgas kodu!",
 	# Kļūdas
-    "error_empty_nickname" => "Ievadi savu spēlētāja vārdu!",
+    "error_empty_message" => "Ievadi savu ziņu!",
     "error_empty_server" => "Izvēlies serveri!",
     "error_empty_code" => "Ievadi atslēgas kodu!",
     "error_invalid_code" => "Atslēgas kods nav pareizi sastādīts!",
-    "unban_successful" => "Bans veiksmīgi noņemts!",
+    "message_sent_successfully" => "Ziņa veiksmīgi nosūtīta!",
 	# Forma
     "form_price" => "Cena",
     "form_code" => "Atslēgas kods",
-    "form_player_name" => "Spēlētājs",
+    "form_message" => "Ziņa",
     "form_server" => "Serveris",
     "form_unlock_code" => "Atslēgas kods",
-    "form_buy" => "Pirkt",
+    "form_send" => "Sūtīt",
 );
 
-    $c['lang'][$p]['en'] = array(
-    "instructions" => "To purchase the ban removal for <PRICE> EUR in the selected server, send the following code: <b><KEYWORD><CODE></b> to <b><NUMBER></b> to receive an unclock code!",
+$c['lang'][$p]['en'] = array(
+	"instructions" => "To purchase the ban removal for <PRICE> EUR in the selected server, send the following code: <b><KEYWORD><CODE></b> to <b><NUMBER></b> to receive an unclock code!",
 	# Kļūdas
-    "error_empty_nickname" => "Enter your nickname!",
-    "error_empty_server" => "Select the server!",
-    "error_empty_code" => "Enter the unlock code!",
-    "error_invalid_code" => "The format of the unlock code is not valid!",
-    "unban_successful" => "Ban removed sucessfully!",
+	"error_empty_message" => "Enter your message!",
+	"error_empty_server" => "Select the server!",
+	"error_empty_code" => "Enter the unlock code!",
+	"error_invalid_code" => "The format of the unlock code is not valid!",
+	"message_sent_successfully" => "Message sent successfully!",
 	# Forma
-    "form_price" => "Price",
-    "form_code" => "Unlock code",
-    "form_player_name" => "Player",
-    "form_server" => "Server",
-    "form_unlock_code" => "Unlock code",
-    "form_buy" => "Buy",
-);
+	"form_price" => "Price",
+	"form_code" => "Unlock code",
+	"form_message" => "Message",
+	"form_server" => "Server",
+	"form_unlock_code" => "Unlock code",
+	"form_send" => "Send",
+	);
 /*
 -----------------------------------------------------
-    Minecraft unban spraudņa konfigurācija
+    Minecraft čata ieraksta spraudņa konfigurācija
 -----------------------------------------------------
 */
 $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
@@ -64,8 +65,8 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 	<?php
 	$errors = array();
 
-	if(empty($_POST['nickname'])){
-		$errors[] = $lang[$p]['error_empty_nickname'];
+	if(empty($_POST['message'])){
+		$errors[] = $lang[$p]['error_empty_message'];
 	}
 
 	if(empty($_POST['server'])){
@@ -90,13 +91,13 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 		$baltsms->setCode($_POST['code']);
 		$baltsms->sendRequest();
 		if($baltsms->getResponse() === true){
-			$unban = str_replace(
-				array("<NICKNAME>"),
-				array($_POST['nickname']),
-				$c[$p]['commands']['unban']
+			$sendMessage = str_replace(
+				array("<MESSAGE>"),
+				array($_POST['message']),
+				$c[$p]['commands']['sendMessage']
 				);
-			$mc['rcon'][$_POST['server']]->send_command($unban);
-			echo baltsms::alert($lang[$p]['unban_successful'], "success");
+			$mc['rcon'][$_POST['server']]->send_command($sendMessage);
+			echo baltsms::alert($lang[$p]['message_sent_successfully'], "success");
 			?>
 			<script type="text/javascript">
 				setTimeout(function(){
@@ -114,9 +115,9 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 		<div class="alert alert-info" id="instructions"><?php echo baltsms::instructionTemplate($lang[$p]['instructions'], array("price" => baltsms::returnPrice(array_values($c[$p]['prices'])[0]), "code" => array_values($c[$p]['prices'])[0])); ?></div>
 		<div id="alerts"></div>
 		<div class="form-group">
-			<label for="nickname" class="col-sm-2 control-label"><?php echo $lang[$p]['form_player_name']; ?></label>
+			<label for="message" class="col-sm-2 control-label"><?php echo $lang[$p]['form_message']; ?></label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" name="nickname" placeholder="<?php echo $lang[$p]['form_player_name']; ?>">
+				<input type="text" class="form-control" name="message" placeholder="<?php echo $lang[$p]['form_message']; ?>">
 			</div>
 		</div>
 		<div class="form-group">
@@ -139,7 +140,7 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 		</div>
 		<div class="form-group">
 			<div id="baltsms-form-button">
-				<button type="submit" class="btn btn-primary"><?php echo $lang[$p]['form_buy']; ?></button>
+				<button type="submit" class="btn btn-primary"><?php echo $lang[$p]['form_send']; ?></button>
 			</div>
 		</div>
 	</form>

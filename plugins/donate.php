@@ -1,5 +1,5 @@
 <?php
-if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != "xmlhttprequest") die("Ajax Only!");
+if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) OR (isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != "xmlhttprequest")) die("Ajax Only!");
 $p = basename(__FILE__, ".php");
 defined("config_present") or require "../config.inc.php";
 in_array($p, $c['sms']['plugins']['web']) or die(baltsms::alert("Spraudnis nav ievadīts atļauto spraudņu sarakstā!", "danger"));
@@ -166,12 +166,21 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 		$baltsms->setCode($_POST['code']);
 		$baltsms->sendRequest();
 		if($baltsms->getResponse() === true){
-			$db->insert("INSERT INTO `" . $c[$p]['db']['table'] . "` (`name`, `message`, `amount`, `time`) VALUES (?, ?, ?, ?)", array(
-				$_POST['name'],
-				$_POST['message'],
-				baltsms::returnPrice($_POST['price']),
-				time()
+			if($db->count("SELECT `id` FROM `" . $c[$p]['db']['table'] . "` WHERE `name` = ?", array($_POST['name'])) == 0){
+				$db->insert("INSERT INTO `" . $c[$p]['db']['table'] . "` (`name`, `message`, `amount`, `time`) VALUES (?, ?, ?, ?)", array(
+				    $_POST['name'],
+				    $_POST['message'],
+				    $_POST['price'],
+				    time()
 				));
+			}else{
+				$db->update("UPDATE `" . $c[$p]['db']['table'] . "` SET `message` = ?, `amount` = `amount` + ?, `time` = ? WHERE `name` = ?", array(
+					$_POST['message'],
+					$_POST['price'],
+					time(),
+					$_POST['name']
+				));
+			}
 			echo baltsms::alert($lang[$p]['thanks_for_donating'], "success");
 			?>
 			<script type="text/javascript">
@@ -246,7 +255,7 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 						<tr>
 							<td><?php echo $donator['name']; ?></td>
 							<td><?php echo $donator['message']; ?></td>
-							<td><?php echo $donator['amount']; ?> EUR</td>
+							<td><?php echo baltsms::returnPrice($donator['amount']); ?> EUR</td>
 							<td><?php echo date("d/m/Y H:i", $donator['time']); ?></td>
 						</tr>
 					<?php endforeach; ?>

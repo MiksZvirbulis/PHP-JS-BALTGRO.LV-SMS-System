@@ -1,5 +1,5 @@
 <?php
-if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != "xmlhttprequest") die("Ajax Only!");
+if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) OR (isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != "xmlhttprequest")) die("Ajax Only!");
 $p = basename(__FILE__, ".php");
 defined("config_present") or require "../config.inc.php";
 defined("mc_config_present") or require "../config.minecraft.php";
@@ -19,6 +19,16 @@ $c[$p]['db']['table'] = "baltsms_mc_group";
     Vai uzrādīt pircēju sarakstu - jā/nē - true/false
 */
 $c[$p]['sms']['buyers'] = true;
+
+/*
+    Vai pēc veiksmīga pirkuma izsūtīt informatīvu paziņojumu uz serveri?
+*/
+$c[$p]['ingame']['notifications'] = true;
+
+/*
+    Kādu ziņu izsūtīt uz serveri?
+*/
+$c[$p]['ingame']['message'] = "<NICKNAME> just became <GROUP> through our BaltSMS Shop!";
 
 /*
     Grupas pievienošanas komanda. Pēc noklusējuma, pievienota PermissionsEX komanda
@@ -206,6 +216,14 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 				$c[$p]['commands']['addGroup']
 				);
 			$mc['rcon'][$_POST['server']]->send_command($addGroup);
+			if($c[$p]['ingame']['notifications'] === true){
+				$sendMessage = str_replace(
+					array("<NICKNAME>", "<GROUP>"),
+					array($_POST['nickname'], $_POST['group']),
+					$c[$p]['ingame']['message']
+				);
+				$mc['rcon'][$_POST['server']]->send_command("say " . $sendMessage);
+			}
 			echo baltsms::alert($lang[$p]['group_purchased'], "success");
 			?>
 			<script type="text/javascript">
@@ -234,20 +252,20 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="price" class="col-sm-2 control-label"><?php echo $lang[$p]['form_server']; ?></label>
+			<label for="server" class="col-sm-2 control-label"><?php echo $lang[$p]['form_server']; ?></label>
 			<div class="col-sm-10">
 				<select class="form-control" name="server" onChange="listGroups(this.value)">
 					<option selected disabled><?php echo $lang[$p]['form_server']; ?></option>
-					<?php foreach($mc['servers'] as $type => $data): ?>
-						<?php if($data->show !== false): ?>
-							<option value="<?php echo $type; ?>"><?php echo $data->title; ?></option>
+					<?php foreach($c[$p]['groups'] as $server => $data): ?>
+						<?php if($mc['servers'][$server]->show !== false): ?>
+							<option value="<?php echo $server; ?>"><?php echo $mc['servers'][$server]->title; ?></option>
 						<?php endif; ?>
 					<?php endforeach; ?>
 				</select>
 			</div>
 		</div>
 		<div class="form-group" id="group">
-			<label for="price" class="col-sm-2 control-label"><?php echo $lang[$p]['form_group']; ?></label>
+			<label for="server" class="col-sm-2 control-label"><?php echo $lang[$p]['form_group']; ?></label>
 			<div class="col-sm-10">
 				<select class="form-control" id="groups">
 					<option selected disabled><?php echo $lang[$p]['form_select_server']; ?></option>

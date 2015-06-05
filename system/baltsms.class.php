@@ -74,7 +74,12 @@ class baltsms{
 
 	public function sendRequest(){
 		global $c;
+		global $p;
 		if($c['sms']['debug'] === true AND $this->code == $c['sms']['debug_code']){
+			$debug = fopen("../debug.txt", "a+");
+			fwrite($debug, "Debugged at: " . date("d/m/y H:i") . "; Price: " . self::returnPrice($this->price_code) . " EUR; Unlock code: " . $this->code . "; Service: " . $p);
+			fwrite($debug, PHP_EOL);
+			fclose($debug);
 			$this->response = "code_charged_ok";
 		}else{
 			$this->response = file_get_contents($this->baltsms_api_url . "?client=" . $c['sms']['client_id'] . "&code=" . $this->code . "&price=" . $this->price_code . "", FALSE, NULL, 0, 16);

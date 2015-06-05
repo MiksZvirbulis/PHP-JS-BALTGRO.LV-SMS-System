@@ -36,7 +36,7 @@ $c['sms']['keyword'] = "BTM";
 /*
     Šis ieslēdz SMS debug, kas ļaus izmantot zemāk norādīto kodu, lai testētu pakalpojumu pieslēgšanu pēc tās apmaksas (ieslēgt/izslēgt - true/false)
 */
-$c['sms']['debug'] = true;
+$c['sms']['debug'] = false;
 
 /*
     Šis ir SMS debug atslēgas kods, kurš pieļaus neapmaksātu pakalpojumu apstiprinājumu kamēr SMS debug būs ieslēgts

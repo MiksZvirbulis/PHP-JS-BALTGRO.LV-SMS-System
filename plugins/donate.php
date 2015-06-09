@@ -48,6 +48,8 @@ $c[$p]['sms']['comment_char_limit'] = 250;
     Ziedošanas pieļaujamās cenas, ievadītas masīvā cenu kodu formātā
 */
 $c[$p]['prices'] = array(
+	5,
+	25,
 	50,
 	70,
 	90,

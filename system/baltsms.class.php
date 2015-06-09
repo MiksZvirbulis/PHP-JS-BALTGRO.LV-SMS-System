@@ -7,7 +7,7 @@
 */
 class baltsms{
 	# BaltSMS API Saite uz kuru tiks izsaukts pieprasījums
-	protected $baltsms_api_url = "http://run.baltgroup.eu/api/sms/charge/";
+	protected $baltsms_api_url = "http://umbridge.balt.xyz/payments/sms/charge/";
 	# Atbilde
 	public $response;
 	# Cenas kods
@@ -40,7 +40,7 @@ class baltsms{
 
 	public static function returnPrice($price_code){
 		$price_code = $price_code * 0.01;
-		return number_format($price_code / 0.702804, 2, ".", "");
+		return number_format($price_code, 2, ".", "");
 	}
 
 	public static function instructionTemplate($template, $data = array()){

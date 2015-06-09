@@ -33,12 +33,14 @@ $c[$p]['ingame']['message'] = "<NICKNAME> just purchased faction peaceful from o
 /*
     Frakcijas peaceful iedošanas komanda. Pēc noklusējuma, pievienota Essentials komanda
 */
-$c[$p]['commands']['giveFPeaceful'] = "f peaceful <NICKNAME>";
+$c[$p]['commands']['giveFPeaceful'][] = "f flag <NICKNAME> peaceful true";
+$c[$p]['commands']['giveFPeaceful'][] = "f flag <NICKNAME> explosions false";
 
 /*
     Frakcijas peaceful noņemšanas komanda. Pēc noklusējuma, pievienota Essentials komanda
 */
-$c[$p]['commands']['removeFPeaceful'] = "f peaceful <NICKNAME>";
+$c[$p]['commands']['removeFPeaceful'][] = "f flag <NICKNAME> peaceful false";
+$c[$p]['commands']['removeFPeaceful'][] = "f flag <NICKNAME> explosions true";
 
 
 $c[$p]['prices'] = array(
@@ -172,13 +174,14 @@ $lang[$p] = $c['lang'][$p][$c['page']['lang_personal']];
 					$_POST['server']
 					));
 			}
-
-			$giveFPeaceful = str_replace(
-				array("<NICKNAME>"),
-				array($_POST['nickname']),
-				$c[$p]['commands']['giveFPeaceful']
+			foreach($c[$p]['commands']['giveFPeaceful'] as $command){
+				$giveFPeaceful = str_replace(
+					array("<NICKNAME>"),
+					array($_POST['nickname']),
+					$command
 				);
-			$mc['rcon'][$_POST['server']]->send_command($giveFPeaceful);
+				$mc['rcon'][$_POST['server']]->send_command($giveFPeaceful);
+			}
 			if($c[$p]['ingame']['notifications'] === true){
 				$sendMessage = str_replace(
 					array("<NICKNAME>"),
@@ -290,12 +293,14 @@ $purchases = $db->fetchAll("SELECT `id`, `nickname`, `server`, `expires` FROM `"
 foreach($purchases as $purchase){
 	if($purchase['expires'] <= time()){
 		if($mc['rcon'][$purchase['server']]->connect() != false){
-			$removeFPeaceful = str_replace(
-				array("<NICKNAME>"),
-				array($purchase['nickname']),
-				$c[$p]['commands']['removeFPeaceful']
-			);
-			$mc['rcon'][$purchase['server']]->send_command($removeFPeaceful);
+			foreach($c[$p]['commands']['removeFPeaceful'] as $command){
+				$removeFPeaceful = str_replace(
+					array("<NICKNAME>"),
+					array($_POST['nickname']),
+					$command
+				);
+				$mc['rcon'][$purchase['server']]->send_command($removeFPeaceful);
+			}
 			$db->delete("DELETE FROM `" . $c[$p]['db']['table'] . "` WHERE `id` = ?", array($purchase['id']));
 		}
 	}

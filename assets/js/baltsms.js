@@ -54,7 +54,7 @@ function loadPlugin(plugin){
 
 function returnPrice(price_code){
 	price_code = price_code * 0.01;
-	return (price_code / 0.702804).toFixed(2);
+	return price_code.toFixed(2);
 }
 
 function changePrice(element){

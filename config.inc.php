@@ -71,6 +71,7 @@ $c['sms']['plugins'] = array(
         "mc_unjail",
         "mc_register",
         "mc_say"
+        "mc_crative"
     ),
 	"samp" => array(
         "samp_levels",

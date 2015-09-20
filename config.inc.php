@@ -71,7 +71,14 @@ $c['sms']['plugins'] = array(
         "mc_unjail",
         "mc_register",
         "mc_say"
-    )
+    ),
+	"samp" => array(
+        "samp_levels",
+        "samp_money",
+        "samp_unban",
+        "samp_unbanip",
+        "samp_unjail"
+    ),
 );
 
 /*
@@ -82,7 +89,7 @@ $c['page']['directory'] = "";
 /*
     Šis ļaus rediģēt lapas nosaukumu, kas ir <title> saturā
 */
-$c['page']['title'] = "BaltSMS - Online SMS Services Application";
+$c['page']['title'] = "baltSMS - Online SMS Services Application";
 
 /*
     Šī ir sistēmas diagnostika, kura ieslēdz kļūdu reportēšanu. Lūdzu nesajauc šo ar SMS sistēmas debug
@@ -118,6 +125,7 @@ $c['lang']['lv'] = array(
     "code_unkown_response" => "Sazinies ar administratoru nododot sekojošo atbildi: ",
     "plugin-type-web" => "Website",
     "plugin-type-mc" => "Minecraft",
+    "plugin-type-samp" => "SAMP",
 	"plugin-donate" => "Ziedot",
     "plugin-mc_group" => "Grupas",
     "plugin-mc_unban" => "Bana noņemšana",
@@ -129,6 +137,11 @@ $c['lang']['lv'] = array(
     "plugin-mc_unjail" => "Unjail",
     "plugin-mc_register" => "Reģistrācija",
     "plugin-mc_say" => "Čata ziņa",
+    "plugin-samp_levels" => "Līmeņi",
+    "plugin-samp_money" => "Nauda",
+    "plugin-samp_unban" => "Unban",
+    "plugin-samp_unbanip" => "Unban IP",
+    "plugin-samp_unjail" => "Unjail",
     "plugin_not_found" => "[plugin-not-found] Spraudnis netika atrasts. Pārbaudi vai fails <strong>plugins/<PLUGIN></strong> eksistē!"
 );
 
@@ -138,6 +151,7 @@ $c['lang']['en'] = array(
     "code_unkown_response" => "Contact the administrator by passing on this message: ",
     "plugin-type-web" => "Website",
     "plugin-type-mc" => "Minecraft",
+    "plugin-type-samp" => "SAMP",
     "plugin-donate" => "Donate",
     "plugin-mc_group" => "Groups",
     "plugin-mc_unban" => "Ban removal",
@@ -149,6 +163,11 @@ $c['lang']['en'] = array(
     "plugin-mc_unjail" => "Unjail",
     "plugin-mc_register" => "Registration",
     "plugin-mc_say" => "Chat message",
+	"plugin-samp_levels" => "Levels",
+    "plugin-samp_money" => "Money",
+    "plugin-samp_unban" => "Unban",
+    "plugin-samp_unbanip" => "Unban IP",
+    "plugin-samp_unjail" => "Unjail",
     "plugin_not_found" => "[plugin-not-found] Plugin was not found. Check if the file <strong>plugins/<PLUGIN></strong> exists!"
 );
 

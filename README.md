@@ -34,6 +34,9 @@ $baltsms->sendRequest();
 $response = $baltsms->getResponse();
 ```
 
+#### Demo
+http://baltgro.mikscode.com/
+
 #### Information
 This repository is made to be used only for baltsms.eu registered clients who have the required information to fill in the configuration. This is a shop which works with the plugins acquired in the plugins folder.
 The request documentation above is ONLY to be used inside the existing shop by creating a new plugin. This class WILL NOT work by including the class externally as it requires data that is set inside the configuration file.
